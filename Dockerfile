@@ -1,9 +1,10 @@
-FROM docker.io/library/alpine:3.7
+FROM cibuilds/hugo
 LABEL maintainer="Okky Hendriansyah <okky.htf@gmail.com>"
-ENV ZOPFLI_RELEASE=1.0.1
+ENV ZOPFLI_RELEASE=1.0.2
 RUN true \
  && set -xe \
- && apk add --no-cache build-base curl \
+ && apk update --no-cache \
+ && apk add --no-cache build-base curl yarn \
  && cd /tmp \
  && curl -LO https://github.com/google/zopfli/archive/zopfli-${ZOPFLI_RELEASE}.tar.gz \
  && tar xvvzpf zopfli-${ZOPFLI_RELEASE}.tar.gz \
@@ -14,6 +15,4 @@ RUN true \
  && mv zopflipng /usr/local/bin/ \
  && cd /tmp \
  && rm zopfli-${ZOPFLI_RELEASE}.tar.gz \
- && rm -Rf zopfli-zopfli-${ZOPFLI_RELEASE} \
- && apk del build-base curl \
- && true
+ && rm -Rf zopfli-zopfli-${ZOPFLI_RELEASE} 
